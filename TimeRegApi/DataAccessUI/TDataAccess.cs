@@ -26,7 +26,7 @@ namespace TimeRegApi.UI.DataAccessUI
             return _tRDbContext.Projects.AsNoTracking().Single(e => e.ProjectId == projectid);
         }
 
-        public async void SavePAsync(Project project)
+        public void SavePAsync(Project project)
         {
             //Retrieve the object first, then update it!
             var b = _tRDbContext.Projects.SingleOrDefault(p => p.ProjectId == project.ProjectId);
@@ -34,11 +34,11 @@ namespace TimeRegApi.UI.DataAccessUI
             //before it is saved into the database
             b.CloneIt(project);
 
-            //_tDbContext.Entry(book).State = EntityState.Modified;
+            //_tRDbContext.Entry(project).State = EntityState.Modified;
             _tRDbContext.SaveChanges();
         }
 
-        public async void DeletePAsync(int projectid)
+        public void DeletePAsync(int projectid)
         {
             var b = _tRDbContext.Projects.SingleOrDefault(p => p.ProjectId == projectid);
 
@@ -67,7 +67,7 @@ namespace TimeRegApi.UI.DataAccessUI
             return _tRDbContext.Employees.AsNoTracking().Single(e => e.EmployeeId == employeeid);
         }
 
-        public async void SaveEAsync(Employee employee)
+        public void SaveEAsync(Employee employee)
         {
             //Retrieve the object first, then update it!
             var b = _tRDbContext.Employees.SingleOrDefault(p => p.EmployeeId == employee.EmployeeId);
@@ -79,7 +79,7 @@ namespace TimeRegApi.UI.DataAccessUI
             _tRDbContext.SaveChanges();
         }
 
-        public async void DeleteEAsync(int employeeid)
+        public void DeleteEAsync(int employeeid)
         {
             var b = _tRDbContext.Employees.SingleOrDefault(p => p.EmployeeId == employeeid);
 
@@ -108,7 +108,7 @@ namespace TimeRegApi.UI.DataAccessUI
             return _tRDbContext.TimeReports.AsNoTracking().Single(e => e.TimeReportId == timeReportid);
         }
 
-        public async void SaveTAsync(TimeReport timeReport)
+        public void SaveTAsync(TimeReport timeReport)
         {
             //Retrieve the object first, then update it!
             var b = _tRDbContext.TimeReports.SingleOrDefault(p => p.TimeReportId == timeReport.TimeReportId);
@@ -120,7 +120,7 @@ namespace TimeRegApi.UI.DataAccessUI
             _tRDbContext.SaveChanges();
         }
 
-        public async void DeleteTAsync(int timeReportid)
+        public void DeleteTAsync(int timeReportid)
         {
             var b = _tRDbContext.TimeReports.SingleOrDefault(p => p.TimeReportId == timeReportid);
 
