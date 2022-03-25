@@ -12,5 +12,13 @@ namespace TimeRegApi.Model
         public int AfterHours { get; set; }
         public string Comment { get; set; }
 
+        public void CloneIt(TimeReport timeReport)
+        {
+            EducationHours = timeReport.EducationHours;
+            PreperationHours = timeReport.PreperationHours;
+            Other = timeReport.Other;
+            AfterHours = timeReport.AfterHours;
+            Comment = timeReport.Comment;
+        }
     }
 }

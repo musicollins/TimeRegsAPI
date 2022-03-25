@@ -6,9 +6,21 @@ namespace TimeRegApi.UI.DataAccessUI
     public interface ITDataAccess
     {
         IEnumerable<Project> GetProjects();
-        Project GetById(int projectid);
-        void Add(Project project);
-        void SaveAsync(Project project);
-        void DeleteAsync(int projectid);
+        Project GetPById(int projectid);
+        void AddP(Project project);
+        void SavePAsync(Project project);
+        void DeletePAsync(int projectid);
+
+        IEnumerable<Employee> GetEmployees();
+        Employee GetEById(int employeeid);
+        void AddE(Employee employee);
+        void SaveEAsync(Employee employee);
+        void DeleteEAsync(int employeeid);
+
+        IEnumerable<TimeReport> GetTimeReports();
+        TimeReport GetTById(int timeReportid);
+        void AddT(TimeReport timeReport);
+        void SaveTAsync(TimeReport timeReport);
+        void DeleteTAsync(int timeReportid);
     }
 }

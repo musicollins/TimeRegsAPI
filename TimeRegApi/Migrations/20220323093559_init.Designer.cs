@@ -12,7 +12,7 @@ using TimeRegApi.Data;
 namespace TimeRegApi.Migrations
 {
     [DbContext(typeof(TRDbContext))]
-    [Migration("20220322125140_init")]
+    [Migration("20220323093559_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -5,8 +5,8 @@ namespace TimeRegApi.Model
 {
     public class Project
     {
-        //[Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key()]
+        [Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
         public string Company { get; set; }
