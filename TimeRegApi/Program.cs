@@ -11,7 +11,9 @@ builder.Services.AddDbContext<TRDbContext>(options => {
 });
 
 builder.Services.AddScoped<TRDbContext>();
-builder.Services.AddScoped<TDataAccess>();
+builder.Services.AddScoped<IProjectsDataAccess, ProjectsDataAccess>();
+builder.Services.AddScoped<IEmployeesDataAccess, EmployeesDataAccess>();
+builder.Services.AddScoped<ITimeReportsDataAccess, TimeReportsDataAccess>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

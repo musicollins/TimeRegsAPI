@@ -20,5 +20,10 @@ namespace TimeRegApi.Model
             AfterHours = timeReport.AfterHours;
             Comment = timeReport.Comment;
         }
+
+        public Project Project { get; set; }
+        public int ProjectId { get; set; }
+        public Employee Employee { get; set; }
+        public int EmployeeId { get; set; }
     }
 }

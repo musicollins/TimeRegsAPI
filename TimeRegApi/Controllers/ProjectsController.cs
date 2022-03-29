@@ -11,82 +11,9 @@ namespace TimeRegApi.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
-        //private readonly TRDbContext _context;
-        //public ProjectsController(TRDbContext context)
-        //{
-        //    _context = context;
-        //}
+        private readonly IProjectsDataAccess dataAccess;
 
-        //[HttpGet]
-        //public async Task<ActionResult<List<Project>>> Get()
-        //{
-        //    return await _context.Projects.ToListAsync();
-        //}
-
-        //[HttpGet("{projectid}")]
-        //public async Task<ActionResult<Project>> Get(int projectid)
-        //{
-        //    var project = await _context.Projects.FindAsync(projectid);
-
-        //    if (project == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return project;
-        //}
-
-        //[HttpPost]
-        //public async Task<ActionResult<List<Project>>> Create(Project project)
-        //{
-        //    _context.Projects.Add(project);
-        //    await _context.SaveChangesAsync();
-
-        //    return await _context.Projects.ToListAsync();
-        //}
-
-        //[HttpPut]
-        //public async Task<ActionResult<List<Project>>> Update(Project request)
-        //{
-        //    var dbProject = await _context.Projects.FindAsync(request.ProjectId);
-
-        //    if (dbProject == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    dbProject.ProjectName = request.ProjectName;
-        //    dbProject.Company = request.Company;
-        //    dbProject.Deadline = request.Deadline;
-        //    dbProject.GitHub = request.GitHub;
-        //    dbProject.Aktiv = request.Aktiv;
-
-        //    await _context.SaveChangesAsync();
-
-        //    return await _context.Projects.ToListAsync();
-        //}
-
-        //[HttpDelete("prpjectid")]
-        //public async Task<ActionResult<List<Project>>> Delete(int projectid)
-        //{
-        //    var dbProject = await _context.Projects.FindAsync(projectid);
-
-        //    if (dbProject == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.Projects.Remove(dbProject);
-        //    await _context.SaveChangesAsync();
-
-        //    return await _context.Projects.ToListAsync();
-        //}
-
-
-
-        private readonly TDataAccess dataAccess;
-
-        public ProjectsController(TDataAccess dataAccess)
+        public ProjectsController(IProjectsDataAccess dataAccess)
         {
             this.dataAccess = dataAccess;
         }
@@ -120,12 +47,7 @@ namespace TimeRegApi.Controllers
             if (project == null)
                 return NotFound("Project not found");
 
-            //project.ProjectName = p.ProjectName;
-            //project.Company = p.Company;
-            //project.Deadline = p.Deadline;
-            //project.GitHub = p.GitHub;
-            //project.Aktiv = p.Aktiv;
-            dataAccess.SavePAsync(project);
+            dataAccess.SavePAsync(p);
 
             return Ok(dataAccess.GetProjects());
         }

@@ -23,6 +23,6 @@ namespace TimeRegApi.Model
             Aktiv = project.Aktiv;
         }
 
-        //public ICollection<TimeReport> TimeReports { get; set; }
+        public ICollection<TimeReport> TimeReports { get; set; } = new List<TimeReport>();
     }
 }
