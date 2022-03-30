@@ -17,7 +17,14 @@ builder.Services.AddScoped<ITimeReportsDataAccess, TimeReportsDataAccess>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    config.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Time-Reg-Api",
+        Version = "v1"
+    });
+});
 
 var app = builder.Build();
 
