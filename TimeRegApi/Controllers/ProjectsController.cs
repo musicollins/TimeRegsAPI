@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TimeRegApi.Data;
 using TimeRegApi.Model;
+using TimeRegApi.UI.DataAccessUI;
 
 namespace TimeRegApi.Controllers
 {
@@ -8,31 +11,24 @@ namespace TimeRegApi.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
-        private static List<Project> projects = new List<Project>
-            {
-                new Project {
-                    ProjectId = 1,
-                    ProjectName = "Test",
-                    Company = "Aveer"
-                },
-                new Project {
-                    ProjectId = 2,
-                    ProjectName = "Testing",
-                    Company = "Aveer"
-                }
-            };
+        private readonly IProjectsDataAccess dataAccess;
+
+        public ProjectsController(IProjectsDataAccess dataAccess)
+        {
+            this.dataAccess = dataAccess;
+        }
 
         [HttpGet]
         public async Task<ActionResult<List<Project>>> Get()
         {
-            return Ok(projects);
+            return Ok(dataAccess.GetProjects());
         }
 
         [HttpGet("{projectId}")]
-        public async Task<ActionResult<Project>> Get(int projectId)
+        public async Task<ActionResult<Project>> GetById(int projectId)
         {
-            var project = projects.Find(p => p.ProjectId == projectId);
-            if(project == null)
+            var project = dataAccess.GetPById(projectId);
+            if (project == null)
                 return NotFound("Project not found");
             return Ok(project);
         }
@@ -40,35 +36,32 @@ namespace TimeRegApi.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Project>>> AddProject(Project project)
         {
-            projects.Add(project);
-            return Ok(projects);
+            dataAccess.AddP(project);
+            return Ok(dataAccess.GetProjects());
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<Project>>> UpdateProject(Project request)
+        public async Task<ActionResult<List<Project>>> UpdateProject(Project p)
         {
-            var project = projects.Find(p => p.ProjectId == request.ProjectId);
+            var project = dataAccess.GetPById(p.ProjectId);
             if (project == null)
                 return NotFound("Project not found");
 
-            project.ProjectName = request.ProjectName;
-            project.Company = request.Company;
-            project.Deadline = request.Deadline;
-            project.GitHub = request.GitHub;
-            project.Aktiv = request.Aktiv;
+            dataAccess.SavePAsync(p);
 
-            return Ok(projects);
+            return Ok(dataAccess.GetProjects());
         }
 
         [HttpDelete("{projectId}")]
         public async Task<ActionResult<List<Project>>> Delete(int projectId)
         {
-            var project = projects.Find(p => p.ProjectId == projectId);
+            var project = dataAccess.GetPById(projectId);
             if (project == null)
                 return NotFound("Project not found");
 
-            projects.Remove(project);
-            return Ok(projects);
+            dataAccess.DeletePAsync(projectId);
+
+            return Ok(dataAccess.GetProjects());
         }
     }
 }
