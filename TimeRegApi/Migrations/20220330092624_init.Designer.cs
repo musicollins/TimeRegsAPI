@@ -12,7 +12,7 @@ using TimeRegApi.Data;
 namespace TimeRegApi.Migrations
 {
     [DbContext(typeof(TRDbContext))]
-    [Migration("20220323093559_init")]
+    [Migration("20220330092624_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,13 +145,23 @@ namespace TimeRegApi.Migrations
                     b.Property<int>("EducationHours")
                         .HasColumnType("int");
 
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Other")
                         .HasColumnType("int");
 
                     b.Property<int>("PreperationHours")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
                     b.HasKey("TimeReportId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("TimeReports");
 
@@ -162,8 +172,10 @@ namespace TimeRegApi.Migrations
                             AfterHours = 2,
                             Comment = "Testing",
                             EducationHours = 0,
+                            EmployeeId = 1,
                             Other = 0,
-                            PreperationHours = 0
+                            PreperationHours = 0,
+                            ProjectId = 2
                         },
                         new
                         {
@@ -171,9 +183,35 @@ namespace TimeRegApi.Migrations
                             AfterHours = 0,
                             Comment = "Testing2",
                             EducationHours = 0,
+                            EmployeeId = 2,
                             Other = 0,
-                            PreperationHours = 5
+                            PreperationHours = 5,
+                            ProjectId = 1
                         });
+                });
+
+            modelBuilder.Entity("TimeRegApi.Model.TimeReport", b =>
+                {
+                    b.HasOne("TimeRegApi.Model.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TimeRegApi.Model.Project", "Project")
+                        .WithMany("TimeReports")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("TimeRegApi.Model.Project", b =>
+                {
+                    b.Navigation("TimeReports");
                 });
 #pragma warning restore 612, 618
         }

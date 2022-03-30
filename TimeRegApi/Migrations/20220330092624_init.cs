@@ -53,11 +53,25 @@ namespace TimeRegApi.Migrations
                     PreperationHours = table.Column<int>(type: "int", nullable: false),
                     Other = table.Column<int>(type: "int", nullable: false),
                     AfterHours = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TimeReports", x => x.TimeReportId);
+                    table.ForeignKey(
+                        name: "FK_TimeReports_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TimeReports_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -80,24 +94,35 @@ namespace TimeRegApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "TimeReports",
-                columns: new[] { "TimeReportId", "AfterHours", "Comment", "EducationHours", "Other", "PreperationHours" },
-                values: new object[,]
-                {
-                    { 1, 2, "Testing", 0, 0, 0 },
-                    { 2, 0, "Testing2", 0, 0, 5 }
-                });
+                columns: new[] { "TimeReportId", "AfterHours", "Comment", "EducationHours", "EmployeeId", "Other", "PreperationHours", "ProjectId" },
+                values: new object[] { 1, 2, "Testing", 0, 1, 0, 0, 2 });
+
+            migrationBuilder.InsertData(
+                table: "TimeReports",
+                columns: new[] { "TimeReportId", "AfterHours", "Comment", "EducationHours", "EmployeeId", "Other", "PreperationHours", "ProjectId" },
+                values: new object[] { 2, 0, "Testing2", 0, 2, 0, 5, 1 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TimeReports_EmployeeId",
+                table: "TimeReports",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TimeReports_ProjectId",
+                table: "TimeReports",
+                column: "ProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "TimeReports");
+
+            migrationBuilder.DropTable(
                 name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Projects");
-
-            migrationBuilder.DropTable(
-                name: "TimeReports");
         }
     }
 }
