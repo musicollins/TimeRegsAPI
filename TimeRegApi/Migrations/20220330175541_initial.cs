@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TimeRegApi.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,13 +13,13 @@ namespace TimeRegApi.Migrations
                 name: "Employees",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    EmployeeId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", nullable: false),
+                    PhoneNumber = table.Column<int>(type: "INTEGER", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,13 +30,13 @@ namespace TimeRegApi.Migrations
                 name: "Projects",
                 columns: table => new
                 {
-                    ProjectId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Company = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Deadline = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GitHub = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Aktiv = table.Column<bool>(type: "bit", nullable: false)
+                    ProjectId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProjectName = table.Column<string>(type: "TEXT", nullable: false),
+                    Company = table.Column<string>(type: "TEXT", nullable: false),
+                    Deadline = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    GitHub = table.Column<string>(type: "TEXT", nullable: false),
+                    Aktiv = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,15 +47,15 @@ namespace TimeRegApi.Migrations
                 name: "TimeReports",
                 columns: table => new
                 {
-                    TimeReportId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EducationHours = table.Column<int>(type: "int", nullable: false),
-                    PreperationHours = table.Column<int>(type: "int", nullable: false),
-                    Other = table.Column<int>(type: "int", nullable: false),
-                    AfterHours = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false)
+                    TimeReportId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    EducationHours = table.Column<int>(type: "INTEGER", nullable: false),
+                    PreperationHours = table.Column<int>(type: "INTEGER", nullable: false),
+                    Other = table.Column<int>(type: "INTEGER", nullable: false),
+                    AfterHours = table.Column<int>(type: "INTEGER", nullable: false),
+                    Comment = table.Column<string>(type: "TEXT", nullable: false),
+                    ProjectId = table.Column<int>(type: "INTEGER", nullable: false),
+                    EmployeeId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,20 +77,22 @@ namespace TimeRegApi.Migrations
             migrationBuilder.InsertData(
                 table: "Employees",
                 columns: new[] { "EmployeeId", "Email", "FirstName", "LastName", "Password", "PhoneNumber" },
-                values: new object[,]
-                {
-                    { 1, "Test@test.se", "Filip", "Lindberg", "112233", 112 },
-                    { 2, "Test2@test.se", "Andre", "Lindqvist", "332211", 112 }
-                });
+                values: new object[] { 1, "Test@test.se", "Filip", "Lindberg", "112233", 112 });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "EmployeeId", "Email", "FirstName", "LastName", "Password", "PhoneNumber" },
+                values: new object[] { 2, "Test2@test.se", "Andre", "Lindqvist", "332211", 112 });
 
             migrationBuilder.InsertData(
                 table: "Projects",
                 columns: new[] { "ProjectId", "Aktiv", "Company", "Deadline", "GitHub", "ProjectName" },
-                values: new object[,]
-                {
-                    { 1, true, "Aveer", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Länk", "Test" },
-                    { 2, false, "Aveer", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Länk 2", "Testing" }
-                });
+                values: new object[] { 1, true, "Aveer", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Länk", "Test" });
+
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: new[] { "ProjectId", "Aktiv", "Company", "Deadline", "GitHub", "ProjectName" },
+                values: new object[] { 2, false, "Aveer", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Länk 2", "Testing" });
 
             migrationBuilder.InsertData(
                 table: "TimeReports",
